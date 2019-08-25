@@ -1,0 +1,27 @@
+.contacts-table {
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
+
+  th {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    text-align: center;
+  }
+
+  td {
+    text-align: left;
+    text-align: center;
+  }
+
+  tr:nth-child(odd) {
+    background-color: lightgrey;
+  }
+
+  tr:nth-child(even) {
+    background-color: grey;
+  }
+}
