@@ -1,15 +1,4 @@
 import React, { Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-import {
-  addSelectedContact,
-  removeSelectedContact,
-  addContactToEdit
-} from '../../redux/contacts/contacts.actions';
-
-import { selectSelectedContactsIds } from '../../redux/contacts/contacts.selectors';
 
 import CustomButton from '../custom-button/custom-button.component';
 
@@ -64,19 +53,4 @@ const ContactsRow = ({
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  selectedContactsIds: selectSelectedContactsIds
-});
-
-const mapDispatchToProps = dispatch => ({
-  addSelectedContact: contact => dispatch(addSelectedContact(contact)),
-  removeSelectedContact: contact => dispatch(removeSelectedContact(contact)),
-  addContactToEdit: contact => dispatch(addContactToEdit(contact))
-});
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ContactsRow)
-);
+export default ContactsRow;

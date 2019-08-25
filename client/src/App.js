@@ -8,9 +8,9 @@ import { loadingUserStartAsync } from './redux/user/user.actions';
 import { selectCurrentUser } from './redux/user/user.selectors';
 
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import UserContacts from './pages/user-contacts/user-contacts.component';
-import AddEditContact from './pages/add-edit-contact/add-edit-contact.component';
-import Header from './components/header/header.component';
+import UserContactsContainer from './pages/user-contacts/user-contacts.container';
+import AddEditContactContainer from './pages/add-edit-contact/add-edit-contact.container';
+import HeaderContainer from './components/header/header.container';
 
 const App = ({ loadingUserStartAsync, currentUser }) => {
   useEffect(() => {
@@ -19,7 +19,7 @@ const App = ({ loadingUserStartAsync, currentUser }) => {
 
   return (
     <Fragment>
-      <Header />
+      <HeaderContainer />
       <Switch>
         <Route
           exact
@@ -33,10 +33,14 @@ const App = ({ loadingUserStartAsync, currentUser }) => {
           path='/user-contacts'
           render={props =>
             // if you didn't pass the props to the component > it will never has {history, match, location}
-            currentUser ? <UserContacts {...props} /> : <Redirect to='/' />
+            currentUser ? (
+              <UserContactsContainer {...props} />
+            ) : (
+              <Redirect to='/' />
+            )
           }
         />
-        <Route exact path='/contact' component={AddEditContact} />
+        <Route exact path='/contact' component={AddEditContactContainer} />
       </Switch>
     </Fragment>
   );

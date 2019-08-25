@@ -1,12 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-import { selectCurrentUser } from '../../redux/user/user.selectors';
-import { selectHidden } from '../../redux/message/message.selectors';
-
-import { signoutUserStartAsync } from '../../redux/user/user.actions';
 
 import ConfirmMessage from '../confirm-message/confirm-message.component';
 
@@ -35,16 +28,4 @@ const Header = ({ currentUser, signoutUserStartAsync, hidden }) => (
   </div>
 );
 
-const mapDispatchToProps = {
-  signoutUserStartAsync
-};
-
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-  hidden: selectHidden
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default Header;

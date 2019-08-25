@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-import { selectContactToEdit } from '../../redux/contacts/contacts.selectors';
 
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
-
-import {
-  addContactStartAsync,
-  updateContactStartAsync
-} from '../../redux/contacts/contacts.actions';
 
 import './add-edit-contact.styles.scss';
 
@@ -138,16 +129,4 @@ const AddEditContact = ({
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  contact: selectContactToEdit
-});
-
-const mapDispatchToProps = {
-  addContactStartAsync,
-  updateContactStartAsync
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddEditContact);
+export default AddEditContact;

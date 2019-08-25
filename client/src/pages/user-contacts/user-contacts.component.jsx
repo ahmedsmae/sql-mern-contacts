@@ -1,29 +1,16 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
-import { selectCurrentUser } from '../../redux/user/user.selectors';
-import {
-  selectSelectedContacts,
-  selectIsLoading
-} from '../../redux/contacts/contacts.selectors';
+import { messageArgs, downloadCsv } from './utils';
 
-import {
-  addContactToEdit,
-  importContactsStartAsync,
-  exportAllContactsStartAsync,
-  loadingContactsStartAsync
-} from '../../redux/contacts/contacts.actions';
-import { setMessage } from '../../redux/message/message.actions';
 import { csvFromContactsArray } from '../../redux/contacts/utils';
 
 import WithSpinner from '../../components/with-spinner/with-spinner.component';
-import ContactsTable from '../../components/contacts-table/contacts-table.component';
+import ContactsTableContainer from '../../components/contacts-table/contacts-table.container';
 import CustomButton from '../../components/custom-button/custom-button.component';
 
 import './user-contacts.styles.scss';
 
-const ContactsTableWithSpinner = WithSpinner(ContactsTable);
+const ContactsTableContainerWithSpinner = WithSpinner(ContactsTableContainer);
 
 const UserContacts = ({
   currentUser,
@@ -40,24 +27,6 @@ const UserContacts = ({
     loadingContactsStartAsync();
   }, [loadingContactsStartAsync]);
 
-  const messageArgs = {
-    title: 'Delete contacts confirmation',
-    message: `This will delete permenently all selected contacts. Are you sure ?`,
-    confirm: 'Delete',
-    cancel: 'Cancel'
-  };
-
-  const downloadCsv = href => {
-    // create a link to download the generated url
-    const a = document.createElement('a');
-    a.setAttribute('hidden', true);
-    a.setAttribute('href', href);
-    a.setAttribute('download', 'contacts.csv');
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
   let filePick;
 
   return (
@@ -65,7 +34,7 @@ const UserContacts = ({
       <h2>{`Welcome ${currentUser.name}`}</h2>
       <p>{`Your ID: ${currentUser.id}`}</p>
       <div>
-        <ContactsTableWithSpinner isLoading={isContactsLoading} />
+        <ContactsTableContainerWithSpinner isLoading={isContactsLoading} />
       </div>
       <div className='table-controllers'>
         <CustomButton
@@ -125,22 +94,4 @@ const UserContacts = ({
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-  isContactsLoading: selectIsLoading,
-  selectedContacts: selectSelectedContacts
-});
-
-const mapDispatchToProps = dispatch => ({
-  setMessage: args => dispatch(setMessage(args)),
-  addContactToEdit: contact => dispatch(addContactToEdit(contact)),
-  importContactsStartAsync: filePath =>
-    dispatch(importContactsStartAsync(filePath)),
-  exportAllContactsStartAsync: () => dispatch(exportAllContactsStartAsync()),
-  loadingContactsStartAsync: () => dispatch(loadingContactsStartAsync())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserContacts);
+export default UserContacts;

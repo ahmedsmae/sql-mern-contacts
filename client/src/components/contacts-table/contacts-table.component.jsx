@@ -1,18 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
-import {
-  selectSelectedContactsIds,
-  selectUserContacts
-} from '../../redux/contacts/contacts.selectors';
-
-import {
-  selectAllContacts,
-  unselectAllContacts
-} from '../../redux/contacts/contacts.actions';
-
-import ContactsRow from '../contacts-row/contacts-row.component';
+import ContactsRowContainer from '../contacts-row/contacts-row.container';
 
 import './contacts-table.styles.scss';
 
@@ -55,24 +43,11 @@ const ContactsTable = ({
       </thead>
       <tbody>
         {contacts.map(contact => (
-          <ContactsRow key={contact.id} contact={contact} />
+          <ContactsRowContainer key={contact.id} contact={contact} />
         ))}
       </tbody>
     </table>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  selectAllContacts: () => dispatch(selectAllContacts()),
-  unselectAllContacts: () => dispatch(unselectAllContacts())
-});
-
-const mapStateToProps = createStructuredSelector({
-  selectedContactsIds: selectSelectedContactsIds,
-  contacts: selectUserContacts
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ContactsTable);
+export default ContactsTable;

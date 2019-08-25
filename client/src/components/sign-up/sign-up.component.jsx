@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 
 import './sign-up.styles.scss';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-
-import { registerUserStartAsync } from '../../redux/user/user.actions';
 
 const SignUp = ({ registerUserStartAsync }) => {
   const [userCredentials, setCredentials] = useState({
@@ -83,11 +80,4 @@ const SignUp = ({ registerUserStartAsync }) => {
   );
 };
 
-const mapDispatchToProps = {
-  registerUserStartAsync
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(SignUp);
+export default SignUp;
