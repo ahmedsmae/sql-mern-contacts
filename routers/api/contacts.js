@@ -10,9 +10,12 @@ const {
   insertContact,
   updateContact,
   deleteContact,
-  deleteContacts,
+  deleteContacts
+} = require('../../utils/database/sql-db/contacts/contacts.general');
+
+const {
   adminGetAllContacts
-} = require('../../utils/database/sql-db');
+} = require('../../utils/database/sql-db/contacts/contacts.admin');
 
 const parseJson2csv = require('../../utils/csv/csv-parser');
 const createStream = require('../../utils/csv/csv-stream');

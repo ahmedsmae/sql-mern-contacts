@@ -24,8 +24,12 @@ const App = ({ loadingUserStart, currentUser }) => {
         <Route
           exact
           path='/'
-          render={() =>
-            currentUser ? <Redirect to='/user-contacts' /> : <SignInAndSignUp />
+          render={props =>
+            currentUser ? (
+              <Redirect to='/user-contacts' />
+            ) : (
+              <SignInAndSignUp {...props} />
+            )
           }
         />
         <Route

@@ -40,6 +40,7 @@ const UserContacts = ({
         <CustomButton
           small
           green
+          type='button'
           onClick={() => {
             addContactToEdit(null);
             history.push('/contact');
@@ -48,7 +49,7 @@ const UserContacts = ({
           <i className='fas fa-plus' /> Add New Contact
         </CustomButton>
 
-        <CustomButton grey small onClick={() => filePick.click()}>
+        <CustomButton grey small type='button' onClick={() => filePick.click()}>
           <i className='fas fa-file-import' /> Import Contacts
         </CustomButton>
         <input
@@ -62,6 +63,7 @@ const UserContacts = ({
         <CustomButton
           grey
           small
+          type='button'
           onClick={() =>
             // only if there is a selected contacts run this function
             selectedContacts.length &&
@@ -71,11 +73,21 @@ const UserContacts = ({
           <i className='fas fa-file-export' /> Export Selection
         </CustomButton>
 
-        <CustomButton small grey onClick={() => exportAllContactsStart()}>
+        <CustomButton
+          small
+          grey
+          type='button'
+          onClick={() => exportAllContactsStart()}
+        >
           <i className='fas fa-file-export' /> Export All Contacts
         </CustomButton>
 
-        <CustomButton onClick={() => setMessage(messageArgs)} small red>
+        <CustomButton
+          small
+          red
+          type='button'
+          onClick={() => setMessage(messageArgs)}
+        >
           <i className='fas fa-trash-alt' /> Delete Selection
         </CustomButton>
       </div>

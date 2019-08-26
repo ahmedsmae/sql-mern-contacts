@@ -13,7 +13,7 @@ const {
   adminGetAllUserContacts,
   adminDeleteAllUserContacts,
   adminDropContactsTable
-} = require('../../utils/database/sql-db');
+} = require('../../utils/database/sql-db/contacts/contacts.admin');
 
 // @route    GET api/admin/contacts
 // @desc     Get all contacts in contacts table

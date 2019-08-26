@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 
 const connectMongoDB = require('./utils/database/mongo-db');
-const { createContactsTable } = require('./utils/database/sql-db');
+const createTables = require('./utils/database/sql-db/create-tables');
+// const { createContactsTable } = require('./utils/database/sql-db');
 
 const app = express();
 
@@ -10,7 +11,7 @@ const app = express();
 connectMongoDB();
 
 // build contacts table if not exists
-createContactsTable();
+createTables();
 
 // Init Middleware
 app.use(express.json({ extended: false }));

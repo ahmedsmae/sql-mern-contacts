@@ -51,272 +51,272 @@ const createContactsTable = () => {
   });
 };
 
-const getAllContacts = userId => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ?`;
+// const getAllContacts = userId => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `SELECT * FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ?`;
 
-    pool.query(sql, userId, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, userId, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const getContactById = (userId, id) => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
+// const getContactById = (userId, id) => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `SELECT * FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
 
-    pool.query(sql, [userId, id], (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, [userId, id], (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result[0]);
-    });
-  });
-};
+//       return resolve(result[0]);
+//     });
+//   });
+// };
 
-const getContactByName = (userId, txt) => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} 
-        WHERE ${COL_OWNER} = ? AND ${COL_FIRST_NAME} LIKE '%${txt}%' 
-        OR ${COL_OWNER} = ? AND ${COL_LAST_NAME} LIKE '%${txt}%'`;
+// const getContactByName = (userId, txt) => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `SELECT * FROM ${TABLE_NAME}
+//         WHERE ${COL_OWNER} = ? AND ${COL_FIRST_NAME} LIKE '%${txt}%'
+//         OR ${COL_OWNER} = ? AND ${COL_LAST_NAME} LIKE '%${txt}%'`;
 
-    pool.query(sql, [userId, userId], (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, [userId, userId], (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const insertContact = ({
-  userId,
-  firstname,
-  lastname,
-  age,
-  email,
-  address,
-  number1,
-  number2
-}) => {
-  return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO ${TABLE_NAME} (
-            ${COL_FIRST_NAME}, 
-            ${COL_LAST_NAME}, 
-            ${COL_AGE}, 
-            ${COL_EMAIL}, 
-            ${COL_ADDRESS}, 
-            ${COL_NUMBER_1}, 
-            ${COL_NUMBER_2},
-            ${COL_OWNER}
-            ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)`;
+// const insertContact = ({
+//   userId,
+//   firstname,
+//   lastname,
+//   age,
+//   email,
+//   address,
+//   number1,
+//   number2
+// }) => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `INSERT INTO ${TABLE_NAME} (
+//             ${COL_FIRST_NAME},
+//             ${COL_LAST_NAME},
+//             ${COL_AGE},
+//             ${COL_EMAIL},
+//             ${COL_ADDRESS},
+//             ${COL_NUMBER_1},
+//             ${COL_NUMBER_2},
+//             ${COL_OWNER}
+//             ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    pool.query(
-      sql,
-      [firstname, lastname, age, email, address, number1, number2, userId],
-      (err, result) => {
-        if (err) return reject(err);
+//     pool.query(
+//       sql,
+//       [firstname, lastname, age, email, address, number1, number2, userId],
+//       (err, result) => {
+//         if (err) return reject(err);
 
-        return resolve(result);
-      }
-    );
-  });
-};
+//         return resolve(result);
+//       }
+//     );
+//   });
+// };
 
-const updateContact = ({
-  userId,
-  id,
-  firstname,
-  lastname,
-  age,
-  email,
-  address,
-  number1,
-  number2
-}) => {
-  return new Promise((resolve, reject) => {
-    const sql = `UPDATE ${TABLE_NAME} SET 
-        ${COL_FIRST_NAME} = ?, 
-        ${COL_LAST_NAME} = ?, 
-        ${COL_AGE} = ?, 
-        ${COL_EMAIL} = ?, 
-        ${COL_ADDRESS} = ?, 
-        ${COL_NUMBER_1} = ?, 
-        ${COL_NUMBER_2} = ? 
-        WHERE ${COL_OWNER} = ? AND id = ?`;
+// const updateContact = ({
+//   userId,
+//   id,
+//   firstname,
+//   lastname,
+//   age,
+//   email,
+//   address,
+//   number1,
+//   number2
+// }) => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `UPDATE ${TABLE_NAME} SET
+//         ${COL_FIRST_NAME} = ?,
+//         ${COL_LAST_NAME} = ?,
+//         ${COL_AGE} = ?,
+//         ${COL_EMAIL} = ?,
+//         ${COL_ADDRESS} = ?,
+//         ${COL_NUMBER_1} = ?,
+//         ${COL_NUMBER_2} = ?
+//         WHERE ${COL_OWNER} = ? AND id = ?`;
 
-    pool.query(
-      sql,
-      [firstname, lastname, age, email, address, number1, number2, userId, id],
-      (err, result) => {
-        if (err) return reject(err);
+//     pool.query(
+//       sql,
+//       [firstname, lastname, age, email, address, number1, number2, userId, id],
+//       (err, result) => {
+//         if (err) return reject(err);
 
-        return resolve(result);
-      }
-    );
-  });
-};
+//         return resolve(result);
+//       }
+//     );
+//   });
+// };
 
-const deleteContact = (userId, id) => {
-  return new Promise((resolve, reject) => {
-    const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
+// const deleteContact = (userId, id) => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
 
-    pool.query(sql, [userId, id], (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, [userId, id], (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const deleteContacts = (userId, ids) => {
-  return new Promise((resolve, reject) => {
-    // delete from your_table where id in (value1, value2, ...);
-    let marks = '';
-    ids.forEach(id => (marks += ' ?,'));
-    marks = marks.substring(1, marks.length - 1);
+// const deleteContacts = (userId, ids) => {
+//   return new Promise((resolve, reject) => {
+//     // delete from your_table where id in (value1, value2, ...);
+//     let marks = '';
+//     ids.forEach(id => (marks += ' ?,'));
+//     marks = marks.substring(1, marks.length - 1);
 
-    const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id in (${marks})`;
+//     const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id in (${marks})`;
 
-    pool.query(sql, [userId, ...ids], (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, [userId, ...ids], (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const deleteAllUserContacts = userId => {
-  return new Promise((resolve, reject) => {
-    const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ?`;
+// const deleteAllUserContacts = userId => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ?`;
 
-    pool.query(sql, userId, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, userId, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const importMultibleContacts = values => {
-  return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO ${TABLE_NAME} 
-    (${COL_FIRST_NAME}, 
-      ${COL_LAST_NAME}, 
-      ${COL_AGE}, 
-      ${COL_EMAIL}, 
-      ${COL_ADDRESS}, 
-      ${COL_NUMBER_1}, 
-      ${COL_NUMBER_2}, 
-      ${COL_OWNER}) VALUES ?`;
+// const importMultibleContacts = values => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `INSERT INTO ${TABLE_NAME}
+//     (${COL_FIRST_NAME},
+//       ${COL_LAST_NAME},
+//       ${COL_AGE},
+//       ${COL_EMAIL},
+//       ${COL_ADDRESS},
+//       ${COL_NUMBER_1},
+//       ${COL_NUMBER_2},
+//       ${COL_OWNER}) VALUES ?`;
 
-    pool.query(sql, [values], (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, [values], (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const importContactsFromFile = fileUrl => {
-  return new Promise((resolve, reject) => {
-    const sql = `LOAD DATA LOCAL INFILE '${fileUrl}' 
-        INTO TABLE ${TABLE_NAME} 
-        FIELDS TERMINATED BY ',' 
-        ENCLOSED BY '"' 
-        LINES TERMINATED BY '\n' 
-        IGNORE 1 ROWS`;
+// const importContactsFromFile = fileUrl => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `LOAD DATA LOCAL INFILE '${fileUrl}'
+//         INTO TABLE ${TABLE_NAME}
+//         FIELDS TERMINATED BY ','
+//         ENCLOSED BY '"'
+//         LINES TERMINATED BY '\n'
+//         IGNORE 1 ROWS`;
 
-    pool.query(sql, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const adminGetAllContacts = () => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME}`;
+// const adminGetAllContacts = () => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `SELECT * FROM ${TABLE_NAME}`;
 
-    pool.query(sql, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const adminGetContactById = id => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
+// const adminGetContactById = id => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
 
-    pool.query(sql, id, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, id, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result[0]);
-    });
-  });
-};
+//       return resolve(result[0]);
+//     });
+//   });
+// };
 
-const adminGetContactByName = txt => {
-  return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} 
-        WHERE ${COL_FIRST_NAME} LIKE '%${txt}%' 
-        OR ${COL_LAST_NAME} LIKE '%${txt}%'`;
+// const adminGetContactByName = txt => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `SELECT * FROM ${TABLE_NAME}
+//         WHERE ${COL_FIRST_NAME} LIKE '%${txt}%'
+//         OR ${COL_LAST_NAME} LIKE '%${txt}%'`;
 
-    pool.query(sql, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const adminDeleteContact = id => {
-  return new Promise((resolve, reject) => {
-    const sql = `DELETE FROM ${TABLE_NAME} id = ?`;
+// const adminDeleteContact = id => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `DELETE FROM ${TABLE_NAME} id = ?`;
 
-    pool.query(sql, id, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, id, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
-const adminGetAllUserContacts = userId => getAllContacts(userId);
-const adminDeleteAllUserContacts = userId => deleteAllUserContacts(userId);
+// const adminGetAllUserContacts = userId => getAllContacts(userId);
+// const adminDeleteAllUserContacts = userId => deleteAllUserContacts(userId);
 
-const adminDropContactsTable = () => {
-  return new Promise((resolve, reject) => {
-    const sql = `DROP TABLE IF EXISTS ${TABLE_NAME}`;
+// const adminDropContactsTable = () => {
+//   return new Promise((resolve, reject) => {
+//     const sql = `DROP TABLE IF EXISTS ${TABLE_NAME}`;
 
-    pool.query(sql, (err, result) => {
-      if (err) return reject(err);
+//     pool.query(sql, (err, result) => {
+//       if (err) return reject(err);
 
-      return resolve(result);
-    });
-  });
-};
+//       return resolve(result);
+//     });
+//   });
+// };
 
 module.exports = {
-  createContactsTable,
-  getAllContacts,
-  getContactById,
-  getContactByName,
-  insertContact,
-  updateContact,
-  deleteContact,
-  deleteContacts,
-  deleteAllUserContacts,
-  importMultibleContacts,
-  importContactsFromFile,
-  adminGetAllContacts,
-  adminGetContactById,
-  adminGetContactByName,
-  adminDeleteContact,
-  adminGetAllUserContacts,
-  adminDeleteAllUserContacts,
-  adminDropContactsTable
+  // createContactsTable,
+  // getAllContacts,
+  // getContactById,
+  // getContactByName,
+  // insertContact,
+  // updateContact,
+  // deleteContact,
+  // deleteContacts,
+  // deleteAllUserContacts,
+  // importMultibleContacts,
+  // importContactsFromFile,
+  // adminGetAllContacts,
+  // adminGetContactById,
+  // adminGetContactByName,
+  // adminDeleteContact,
+  // adminGetAllUserContacts,
+  // adminDeleteAllUserContacts,
+  // adminDropContactsTable
 };

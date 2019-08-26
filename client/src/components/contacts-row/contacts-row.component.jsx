@@ -40,6 +40,7 @@ const ContactsRow = ({
           <CustomButton
             icon
             green
+            type='button'
             onClick={() => {
               addContactToEdit(contact);
               history.push('/contact');

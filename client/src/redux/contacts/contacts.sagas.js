@@ -45,7 +45,6 @@ function* deletingContactsAsync({ payload }) {
     });
 
     yield put(deletingContactsSuccess(response.data));
-    // dispatch(loadingContactsStartAsync());
   } catch (err) {
     yield put(deletingContactsFailure(err.message));
   }
@@ -91,7 +90,6 @@ function* importContactsAsync({ payload }) {
     const response = yield call(axios.post, 'api/contacts/import-from-csv', fd);
 
     yield put(importContactsSuccess(response.data));
-    // dispatch(loadingContactsStartAsync());
   } catch (err) {
     yield put(importContactsFailure(err.message));
   }
@@ -104,8 +102,6 @@ function* exportAllContactsAsync() {
       method: 'get',
       url: 'api/contacts/export/all-to-csv'
     });
-
-    // console.log(response.data);
 
     yield put(exportAllContactsSuccess());
 
@@ -164,6 +160,21 @@ function* exportAllContactsStart() {
   );
 }
 
+// these 2 actions will listen to IMPORT_SUCCESS and DELETE_SUCCESS and run loading contacts once more
+function* reloadContactsAfterImport() {
+  yield takeLatest(
+    ContactsActionTypes.IMPORT_CONTACTS_SUCCESS,
+    loadingContactsAsync
+  );
+}
+
+function* reloadContactsAfterDelete() {
+  yield takeLatest(
+    ContactsActionTypes.DELETING_CONTACTS_SUCCESS,
+    loadingContactsAsync
+  );
+}
+
 export default function* contactsSagas() {
   yield all([
     call(loadingContactsStart),
@@ -171,6 +182,8 @@ export default function* contactsSagas() {
     call(addContactStart),
     call(updateContactStart),
     call(importContactsStart),
-    call(exportAllContactsStart)
+    call(exportAllContactsStart),
+    call(reloadContactsAfterImport),
+    call(reloadContactsAfterDelete)
   ]);
 }

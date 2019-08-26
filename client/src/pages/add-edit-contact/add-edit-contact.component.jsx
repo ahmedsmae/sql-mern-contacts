@@ -117,7 +117,11 @@ const AddEditContact = ({
         />
 
         <div className='buttons'>
-          <CustomButton green onClick={() => history.push('/user-contacts')}>
+          <CustomButton
+            green
+            type='button'
+            onClick={() => history.push('/user-contacts')}
+          >
             {contact ? 'Cancel Changes' : 'Cancel'}
           </CustomButton>
           <CustomButton red type='submit'>
