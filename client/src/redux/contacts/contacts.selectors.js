@@ -26,3 +26,8 @@ export const selectContactToEdit = createSelector(
   [selectContacts],
   contacts => contacts.contactToEdit
 );
+
+export const selectIsContactsLoaded = createSelector(
+  [selectUserContacts],
+  contacts => !!contacts
+);

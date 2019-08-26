@@ -5,7 +5,7 @@ import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-const SignIn = ({ signinUserStartAsync }) => {
+const SignIn = ({ signinUserStart }) => {
   const [userCredentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -16,7 +16,7 @@ const SignIn = ({ signinUserStartAsync }) => {
 
     const { email, password } = userCredentials;
 
-    signinUserStartAsync({ email, password });
+    signinUserStart({ email, password });
 
     setCredentials({ email: '', password: '' });
   };

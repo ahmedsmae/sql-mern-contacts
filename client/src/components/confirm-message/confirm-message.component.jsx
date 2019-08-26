@@ -1,14 +1,4 @@
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-
-import { selectMessage } from '../../redux/message/message.selectors';
-import { selectSelectedContactsIds } from '../../redux/contacts/contacts.selectors';
-import { removeMessage } from '../../redux/message/message.actions';
-import {
-  deletingContactsStartAsync,
-  unselectContactsByIds
-} from '../../redux/contacts/contacts.actions';
 
 import CustomButton from '../custom-button/custom-button.component';
 
@@ -17,7 +7,7 @@ import './confirm-message.styles.scss';
 const ConfirmMessage = ({
   message: { title, message, confirm, cancel },
   removeMessage,
-  deletingContactsStartAsync,
+  deletingContactsStart,
   selectedIds,
   unselectContactsByIds
 }) => {
@@ -44,7 +34,7 @@ const ConfirmMessage = ({
           <CustomButton
             red
             onClick={() => {
-              deletingContactsStartAsync(selectedIds);
+              deletingContactsStart(selectedIds);
               removeMessage();
               unselectContactsByIds(selectedIds);
             }}
@@ -57,18 +47,4 @@ const ConfirmMessage = ({
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  message: selectMessage,
-  selectedIds: selectSelectedContactsIds
-});
-
-const mapDispatchToProps = dispatch => ({
-  removeMessage: () => dispatch(removeMessage()),
-  deletingContactsStartAsync: ids => dispatch(deletingContactsStartAsync(ids)),
-  unselectContactsByIds: contacts => dispatch(unselectContactsByIds(contacts))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ConfirmMessage);
+export default ConfirmMessage;

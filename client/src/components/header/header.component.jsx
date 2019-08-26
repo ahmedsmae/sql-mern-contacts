@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import ConfirmMessage from '../confirm-message/confirm-message.component';
+import ConfirmMessageContainer from '../confirm-message/confirm-message.container';
 
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 
 import './header.styles.scss';
 
-const Header = ({ currentUser, signoutUserStartAsync, hidden }) => (
+const Header = ({ currentUser, signoutUserStart, hidden }) => (
   <div className='header'>
     <Link className='logo-container' to='/'>
       <Logo />
@@ -18,13 +18,13 @@ const Header = ({ currentUser, signoutUserStartAsync, hidden }) => (
         ABOUT
       </Link>
       {currentUser ? (
-        <Link className='option' to='/' onClick={() => signoutUserStartAsync()}>
+        <Link className='option' to='/' onClick={() => signoutUserStart()}>
           SIGN OUT
         </Link>
       ) : null}
       <span className='option'>{currentUser ? currentUser.name : ''}</span>
     </div>
-    {!hidden && <ConfirmMessage />}
+    {!hidden && <ConfirmMessageContainer />}
   </div>
 );
 

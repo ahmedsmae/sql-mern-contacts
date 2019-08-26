@@ -5,7 +5,7 @@ import './sign-up.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-const SignUp = ({ registerUserStartAsync }) => {
+const SignUp = ({ registerUserStart }) => {
   const [userCredentials, setCredentials] = useState({
     name: '',
     email: '',
@@ -23,7 +23,7 @@ const SignUp = ({ registerUserStartAsync }) => {
       return;
     }
 
-    registerUserStartAsync({ name, email, password });
+    registerUserStart({ name, email, password });
 
     setCredentials({ name: '', email: '', password: '', confirmPassword: '' });
   };

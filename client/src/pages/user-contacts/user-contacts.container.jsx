@@ -4,14 +4,14 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import {
   selectSelectedContacts,
-  selectIsLoading
+  selectIsContactsLoaded
 } from '../../redux/contacts/contacts.selectors';
 
 import {
   addContactToEdit,
-  importContactsStartAsync,
-  exportAllContactsStartAsync,
-  loadingContactsStartAsync
+  importContactsStart,
+  exportAllContactsStart,
+  loadingContactsStart
 } from '../../redux/contacts/contacts.actions';
 import { setMessage } from '../../redux/message/message.actions';
 
@@ -19,17 +19,16 @@ import UserContacts from './user-contacts.component';
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  isContactsLoading: selectIsLoading,
-  selectedContacts: selectSelectedContacts
+  selectedContacts: selectSelectedContacts,
+  isContactsLoaded: selectIsContactsLoaded
 });
 
 const mapDispatchToProps = dispatch => ({
   setMessage: args => dispatch(setMessage(args)),
   addContactToEdit: contact => dispatch(addContactToEdit(contact)),
-  importContactsStartAsync: filePath =>
-    dispatch(importContactsStartAsync(filePath)),
-  exportAllContactsStartAsync: () => dispatch(exportAllContactsStartAsync()),
-  loadingContactsStartAsync: () => dispatch(loadingContactsStartAsync())
+  importContactsStart: filePath => dispatch(importContactsStart(filePath)),
+  exportAllContactsStart: () => dispatch(exportAllContactsStart()),
+  loadingContactsStart: () => dispatch(loadingContactsStart())
 });
 
 export default connect(

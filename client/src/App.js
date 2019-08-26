@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { loadingUserStartAsync } from './redux/user/user.actions';
+import { loadingUserStart } from './redux/user/user.actions';
 
 import { selectCurrentUser } from './redux/user/user.selectors';
 
@@ -12,10 +12,10 @@ import UserContactsContainer from './pages/user-contacts/user-contacts.container
 import AddEditContactContainer from './pages/add-edit-contact/add-edit-contact.container';
 import HeaderContainer from './components/header/header.container';
 
-const App = ({ loadingUserStartAsync, currentUser }) => {
+const App = ({ loadingUserStart, currentUser }) => {
   useEffect(() => {
-    loadingUserStartAsync();
-  }, [loadingUserStartAsync]);
+    loadingUserStart();
+  }, [loadingUserStart]);
 
   return (
     <Fragment>
@@ -51,7 +51,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  loadingUserStartAsync
+  loadingUserStart
 };
 
 export default connect(

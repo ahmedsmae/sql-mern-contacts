@@ -4,13 +4,13 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { selectHidden } from '../../redux/message/message.selectors';
 
-import { signoutUserStartAsync } from '../../redux/user/user.actions';
+import { signoutUserStart } from '../../redux/user/user.actions';
 
 import Header from './header.component';
 
-const mapDispatchToProps = {
-  signoutUserStartAsync
-};
+const mapDispatchToProps = dispatch => ({
+  signoutUserStart: () => dispatch(signoutUserStart())
+});
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,

@@ -1,9 +1,9 @@
 import UserActionTypes from './user.types';
 
 const INITIAL_STATE = {
-  currentUser: undefined,
+  currentUser: null,
   loading: false,
-  errorMessage: undefined
+  errorMessage: null
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -14,9 +14,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case UserActionTypes.SIGNOUT_USER_START:
       return {
         ...state,
-        currentUser: undefined,
+        currentUser: null,
         loading: true,
-        errorMessage: undefined
+        errorMessage: null
       };
 
     case UserActionTypes.REGISTER_USER_SUCCESS:
@@ -27,7 +27,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...state,
         currentUser: payload,
         loading: false,
-        errorMessage: undefined
+        errorMessage: null
       };
 
     case UserActionTypes.REGISTER_USER_FAILURE:
@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case UserActionTypes.SIGNOUT_USER_FAILURE:
       return {
         ...state,
-        currentUser: undefined,
+        currentUser: null,
         loading: false,
         errorMessage: payload
       };

@@ -14,18 +14,18 @@ const ContactsTableContainerWithSpinner = WithSpinner(ContactsTableContainer);
 
 const UserContacts = ({
   currentUser,
-  isContactsLoading,
   setMessage,
   addContactToEdit,
   history,
-  importContactsStartAsync,
+  importContactsStart,
   selectedContacts,
-  exportAllContactsStartAsync,
-  loadingContactsStartAsync
+  exportAllContactsStart,
+  loadingContactsStart,
+  isContactsLoaded
 }) => {
   useEffect(() => {
-    loadingContactsStartAsync();
-  }, [loadingContactsStartAsync]);
+    loadingContactsStart();
+  }, [loadingContactsStart]);
 
   let filePick;
 
@@ -34,7 +34,7 @@ const UserContacts = ({
       <h2>{`Welcome ${currentUser.name}`}</h2>
       <p>{`Your ID: ${currentUser.id}`}</p>
       <div>
-        <ContactsTableContainerWithSpinner isLoading={isContactsLoading} />
+        <ContactsTableContainerWithSpinner isLoading={!isContactsLoaded} />
       </div>
       <div className='table-controllers'>
         <CustomButton
@@ -54,7 +54,7 @@ const UserContacts = ({
         <input
           style={{ display: 'none' }}
           type='file'
-          onChange={e => importContactsStartAsync(e.target.files[0])}
+          onChange={e => importContactsStart(e.target.files[0])}
           accept='.csv'
           ref={fileInput => (filePick = fileInput)}
         />
@@ -71,18 +71,7 @@ const UserContacts = ({
           <i className='fas fa-file-export' /> Export Selection
         </CustomButton>
 
-        <CustomButton
-          small
-          grey
-          onClick={() => {
-            // cz this action is not connected with the state it will return a promise
-            exportAllContactsStartAsync().then(res => {
-              // convert the returned csv text to a downloadable blob with a specific url
-              const blob = new Blob([res.data], { type: 'text/csv' });
-              downloadCsv(window.URL.createObjectURL(blob));
-            });
-          }}
-        >
+        <CustomButton small grey onClick={() => exportAllContactsStart()}>
           <i className='fas fa-file-export' /> Export All Contacts
         </CustomButton>
 

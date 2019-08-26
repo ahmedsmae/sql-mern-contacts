@@ -1,71 +1,32 @@
-import axios from 'axios';
-
-import setAuthToken from '../utils/setAuthToken';
-
 import ContactsActionTypes from './contacts.types';
 
-const loadingContactsStart = () => ({
+export const loadingContactsStart = () => ({
   type: ContactsActionTypes.LOADING_CONTACTS_START
 });
 
-const loadingContactsSuccess = contacts => ({
+export const loadingContactsSuccess = contacts => ({
   type: ContactsActionTypes.LOADING_CONTACTS_SUCCESS,
   payload: contacts
 });
 
-const loadingContactsFailure = errorMessage => ({
+export const loadingContactsFailure = errorMessage => ({
   type: ContactsActionTypes.LOADING_CONTACTS_FAILURE,
   payload: errorMessage
 });
 
-export const loadingContactsStartAsync = () => async dispatch => {
-  setAuthToken();
-  dispatch(loadingContactsStart());
-
-  try {
-    const response = await axios({
-      method: 'get',
-      url: 'api/contacts'
-    });
-
-    dispatch(loadingContactsSuccess(response.data));
-  } catch (err) {
-    dispatch(loadingContactsFailure(err.message));
-  }
-};
-
-const deletingContactsStart = () => ({
-  type: ContactsActionTypes.DELETING_CONTACTS_START
+export const deletingContactsStart = ids => ({
+  type: ContactsActionTypes.DELETING_CONTACTS_START,
+  payload: ids
 });
 
-const deletingContactsSuccess = () => ({
+export const deletingContactsSuccess = () => ({
   type: ContactsActionTypes.DELETING_CONTACTS_SUCCESS
 });
 
-const deletingContactsFailure = errorMessage => ({
+export const deletingContactsFailure = errorMessage => ({
   type: ContactsActionTypes.DELETING_CONTACTS_FAILURE,
   payload: errorMessage
 });
-
-export const deletingContactsStartAsync = ids => async dispatch => {
-  setAuthToken();
-  dispatch(deletingContactsStart());
-
-  try {
-    const response = await axios({
-      method: 'delete',
-      url: 'api/contacts',
-      data: {
-        contacts: ids
-      }
-    });
-
-    dispatch(deletingContactsSuccess(response.data));
-    dispatch(loadingContactsStartAsync());
-  } catch (err) {
-    dispatch(deletingContactsFailure(err.message));
-  }
-};
 
 export const addSelectedContact = contact => ({
   type: ContactsActionTypes.ADD_SELECTED_CONTACT,
@@ -95,123 +56,57 @@ export const addContactToEdit = contact => ({
   payload: contact
 });
 
-const addContactStart = () => ({
-  type: ContactsActionTypes.ADD_CONTACT_START
+export const addContactStart = contact => ({
+  type: ContactsActionTypes.ADD_CONTACT_START,
+  payload: contact
 });
 
-const addContactSuccess = () => ({
+export const addContactSuccess = () => ({
   type: ContactsActionTypes.ADD_CONTACT_SUCCESS
 });
 
-const addContactFailure = errorMessage => ({
+export const addContactFailure = errorMessage => ({
   type: ContactsActionTypes.ADD_CONTACT_FAILURE,
   payload: errorMessage
 });
 
-export const addContactStartAsync = contact => async dispatch => {
-  setAuthToken();
-  dispatch(addContactStart());
-
-  try {
-    const response = await axios({
-      method: 'post',
-      url: 'api/contacts',
-      data: contact
-    });
-
-    dispatch(addContactSuccess(response.data));
-  } catch (err) {
-    dispatch(addContactFailure(err.message));
-  }
-};
-
-const updateContactStart = () => ({
-  type: ContactsActionTypes.UPDATE_CONTACT_START
+export const updateContactStart = contact => ({
+  type: ContactsActionTypes.UPDATE_CONTACT_START,
+  payload: contact
 });
 
-const updateContactSuccess = () => ({
+export const updateContactSuccess = () => ({
   type: ContactsActionTypes.UPDATE_CONTACT_SUCCESS
 });
 
-const updateContactFailure = errorMessage => ({
+export const updateContactFailure = errorMessage => ({
   type: ContactsActionTypes.UPDATE_CONTACT_FAILURE,
   payload: errorMessage
 });
 
-export const updateContactStartAsync = contact => async dispatch => {
-  setAuthToken();
-  dispatch(updateContactStart());
-
-  try {
-    const response = await axios({
-      method: 'patch',
-      url: `api/contacts/${contact.id}`,
-      data: contact
-    });
-
-    dispatch(updateContactSuccess(response.data));
-  } catch (err) {
-    dispatch(updateContactFailure(err.message));
-  }
-};
-
-const importContactsStart = () => ({
-  type: ContactsActionTypes.IMPORT_CONTACTS_START
+export const importContactsStart = fileObject => ({
+  type: ContactsActionTypes.IMPORT_CONTACTS_START,
+  payload: fileObject
 });
 
-const importContactsSuccess = () => ({
+export const importContactsSuccess = () => ({
   type: ContactsActionTypes.IMPORT_CONTACTS_SUCCESS
 });
 
-const importContactsFailure = errorMessage => ({
+export const importContactsFailure = errorMessage => ({
   type: ContactsActionTypes.IMPORT_CONTACTS_FAILURE,
   payload: errorMessage
 });
 
-export const importContactsStartAsync = fileObject => async dispatch => {
-  setAuthToken();
-  dispatch(importContactsStart());
-
-  try {
-    // FormData is more suitable for file uploads
-    const fd = new FormData();
-    fd.append('csvfile', fileObject, fileObject.name);
-
-    const response = await axios.post('api/contacts/import-from-csv', fd);
-
-    await dispatch(importContactsSuccess(response.data));
-    dispatch(loadingContactsStartAsync());
-  } catch (err) {
-    dispatch(importContactsFailure(err.message));
-  }
-};
-
-const exportAllContactsStart = () => ({
+export const exportAllContactsStart = () => ({
   type: ContactsActionTypes.EXPORT_ALL_CONTACTS_START
 });
 
-const exportAllContactsSuccess = () => ({
+export const exportAllContactsSuccess = () => ({
   type: ContactsActionTypes.EXPORT_ALL_CONTACTS_SUCCESS
 });
 
-const exportAllContactsFailure = errorMessage => ({
+export const exportAllContactsFailure = errorMessage => ({
   type: ContactsActionTypes.EXPORT_ALL_CONTACTS_FAILURE,
   payload: errorMessage
 });
-
-export const exportAllContactsStartAsync = () => async dispatch => {
-  setAuthToken();
-  dispatch(exportAllContactsStart());
-
-  try {
-    const response = await axios({
-      method: 'get',
-      url: 'api/contacts/export/all-to-csv'
-    });
-
-    dispatch(exportAllContactsSuccess());
-    return response;
-  } catch (err) {
-    dispatch(exportAllContactsFailure(err.message));
-  }
-};

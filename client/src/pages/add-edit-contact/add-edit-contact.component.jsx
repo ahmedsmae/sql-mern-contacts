@@ -7,8 +7,8 @@ import './add-edit-contact.styles.scss';
 
 const AddEditContact = ({
   contact,
-  addContactStartAsync,
-  updateContactStartAsync,
+  addContactStart,
+  updateContactStart,
   history
 }) => {
   const [currentContact, setCurrentContact] = useState({
@@ -43,8 +43,8 @@ const AddEditContact = ({
     e.preventDefault();
 
     contact
-      ? updateContactStartAsync({ ...currentContact, id: contact.id })
-      : addContactStartAsync(currentContact);
+      ? updateContactStart({ ...currentContact, id: contact.id })
+      : addContactStart(currentContact);
 
     history.push('/user-contacts');
   };
