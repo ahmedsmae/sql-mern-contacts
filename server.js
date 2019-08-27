@@ -16,12 +16,6 @@ createSqlDB();
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-// @route   GET /
-// @desc    test
-app.get('/', (req, res) => {
-  res.json('Test SQL App');
-});
-
 // Define Routers
 app.use('/api/users', require('./routers/api/users'));
 app.use('/api/contacts', require('./routers/api/contacts'));
@@ -37,7 +31,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// dev port saved on config/dev.env
+// dev port saved on .env
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
