@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
-require('dotenv').config();
+const compression = require('compression');
+
+if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
 const connectMongoDB = require('./database/mongo-db');
 const createSqlDB = require('./database/sql-db/create-db');
@@ -14,6 +16,7 @@ connectMongoDB();
 createSqlDB();
 
 // Init Middleware
+app.use(compression()); // for gzipping on heruko
 app.use(express.json({ extended: false }));
 
 // Define Routers

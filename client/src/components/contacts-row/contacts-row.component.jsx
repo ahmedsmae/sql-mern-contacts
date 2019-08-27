@@ -30,7 +30,7 @@ const ContactsRow = ({
             }
           />
         </td>
-        <td className='id'>{id}</td>
+        <td className='id hide-sm'>{id}</td>
         <td className='first-name'>{firstname}</td>
         <td className='last-name'>{lastname}</td>
         <td className='email hide-sm'>{email}</td>

@@ -14,7 +14,7 @@ const AddEditContact = ({
   const [currentContact, setCurrentContact] = useState({
     firstname: '',
     lastname: '',
-    age: '',
+    age: 0,
     email: '',
     address: '',
     number1: '',
@@ -87,7 +87,7 @@ const AddEditContact = ({
           label='Email'
         />
         <FormInput
-          type='text'
+          type='number'
           name='age'
           handleChange={handleChange}
           value={age}

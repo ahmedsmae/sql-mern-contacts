@@ -32,7 +32,7 @@ const ContactsTable = ({
               }
             />
           </th>
-          <th className='id'>ID</th>
+          <th className='id hide-sm'>ID</th>
           <th className='first-name'>First Name</th>
           <th className='last-name'>Last Name</th>
           <th className='email hide-sm'>Email</th>
