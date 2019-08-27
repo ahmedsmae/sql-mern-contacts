@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
+const enforce = require('express-sslify');
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -18,6 +19,8 @@ createSqlDB();
 // Init Middleware
 app.use(compression()); // for gzipping on heruko
 app.use(express.json({ extended: false }));
+// inforce HTTPS for security
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // Define Routers
 app.use('/api/users', require('./routers/api/users'));
@@ -33,6 +36,10 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
+
+app.get('/service-worker.js', (req, res) => {
+  res.send(path.resolve(__dirname, '..', 'build', 'serbice-worker.js'));
+});
 
 // dev port saved on .env
 const PORT = process.env.PORT;
