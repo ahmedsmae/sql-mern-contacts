@@ -6,7 +6,7 @@ const {
 } = require('../../database/sql-db/table-contacts/contacts.general');
 
 const createStream = fileName => {
-  let stream = fs.createReadStream(`uploads\\${fileName}`);
+  let stream = fs.createReadStream(`.\\uploads\\${fileName}`);
   let myData = [];
   let csvStream = csv
     .parse()
@@ -19,7 +19,7 @@ const createStream = fileName => {
       await importMultibleContacts(myData);
 
       // delete the file from uploads
-      fs.unlinkSync(`uploads\\${fileName}`);
+      fs.unlinkSync(`.\\uploads\\${fileName}`);
     });
 
   stream.pipe(csvStream);
