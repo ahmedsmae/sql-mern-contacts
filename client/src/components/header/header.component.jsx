@@ -22,7 +22,6 @@ const Header = ({ currentUser, signoutUserStart, hidden }) => (
           SIGN OUT
         </Link>
       ) : null}
-      <span className='option'>{currentUser ? currentUser.name : ''}</span>
     </div>
     {!hidden && <ConfirmMessageContainer />}
   </div>

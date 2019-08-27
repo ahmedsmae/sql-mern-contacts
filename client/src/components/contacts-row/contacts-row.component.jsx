@@ -33,9 +33,9 @@ const ContactsRow = ({
         <td className='id'>{id}</td>
         <td className='first-name'>{firstname}</td>
         <td className='last-name'>{lastname}</td>
-        <td className='email'>{email}</td>
+        <td className='email hide-sm'>{email}</td>
         <td className='number'>{number1}</td>
-        <td className='owner'>{owner}</td>
+        <td className='owner hide-sm'>{owner}</td>
         <td>
           <CustomButton
             icon

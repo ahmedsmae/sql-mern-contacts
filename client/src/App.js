@@ -12,6 +12,8 @@ import UserContactsContainer from './pages/user-contacts/user-contacts.container
 import AddEditContactContainer from './pages/add-edit-contact/add-edit-contact.container';
 import HeaderContainer from './components/header/header.container';
 
+import './App.scss';
+
 const App = ({ loadingUserStart, currentUser }) => {
   useEffect(() => {
     loadingUserStart();

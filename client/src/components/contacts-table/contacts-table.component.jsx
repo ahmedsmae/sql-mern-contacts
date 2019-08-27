@@ -35,9 +35,9 @@ const ContactsTable = ({
           <th className='id'>ID</th>
           <th className='first-name'>First Name</th>
           <th className='last-name'>Last Name</th>
-          <th className='email'>Email</th>
+          <th className='email hide-sm'>Email</th>
           <th className='number'>Number 1</th>
-          <th className='owner'>Owner ID</th>
+          <th className='owner hide-sm'>Owner ID</th>
           <th className='edit' />
         </tr>
       </thead>
