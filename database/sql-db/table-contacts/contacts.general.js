@@ -1,5 +1,5 @@
 const pool = require('../root-pool');
-const { TABLE_NAME, COLUMNS } = require('./contacts.table');
+const { CONTACTS_TABLE_NAME, CONTACTS_COLUMNS } = require('./contacts.table');
 
 const {
   COL_FIRST_NAME,
@@ -10,11 +10,11 @@ const {
   COL_NUMBER_1,
   COL_NUMBER_2,
   COL_OWNER
-} = COLUMNS;
+} = CONTACTS_COLUMNS;
 
 const getAllContacts = userId => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ?`;
+    const sql = `SELECT * FROM ${CONTACTS_TABLE_NAME} WHERE ${COL_OWNER} = ?`;
 
     pool.query(sql, userId, (err, result) => {
       if (err) return reject(err);
@@ -26,7 +26,7 @@ const getAllContacts = userId => {
 
 const getContactById = (userId, id) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
+    const sql = `SELECT * FROM ${CONTACTS_TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
 
     pool.query(sql, [userId, id], (err, result) => {
       if (err) return reject(err);
@@ -38,7 +38,7 @@ const getContactById = (userId, id) => {
 
 const getContactByName = (userId, txt) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} 
+    const sql = `SELECT * FROM ${CONTACTS_TABLE_NAME} 
         WHERE ${COL_OWNER} = ? AND ${COL_FIRST_NAME} LIKE '%${txt}%' 
         OR ${COL_OWNER} = ? AND ${COL_LAST_NAME} LIKE '%${txt}%'`;
 
@@ -61,7 +61,7 @@ const insertContact = ({
   number2
 }) => {
   return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO ${TABLE_NAME} (
+    const sql = `INSERT INTO ${CONTACTS_TABLE_NAME} (
             ${COL_FIRST_NAME}, 
             ${COL_LAST_NAME}, 
             ${COL_AGE}, 
@@ -96,7 +96,7 @@ const updateContact = ({
   number2
 }) => {
   return new Promise((resolve, reject) => {
-    const sql = `UPDATE ${TABLE_NAME} SET 
+    const sql = `UPDATE ${CONTACTS_TABLE_NAME} SET 
         ${COL_FIRST_NAME} = ?, 
         ${COL_LAST_NAME} = ?, 
         ${COL_AGE} = ?, 
@@ -120,7 +120,7 @@ const updateContact = ({
 
 const deleteContact = (userId, id) => {
   return new Promise((resolve, reject) => {
-    const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
+    const sql = `DELETE FROM ${CONTACTS_TABLE_NAME} WHERE ${COL_OWNER} = ? AND id = ?`;
 
     pool.query(sql, [userId, id], (err, result) => {
       if (err) return reject(err);
@@ -137,7 +137,7 @@ const deleteContacts = (userId, ids) => {
     ids.forEach(id => (marks += ' ?,'));
     marks = marks.substring(1, marks.length - 1);
 
-    const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ? AND id in (${marks})`;
+    const sql = `DELETE FROM ${CONTACTS_TABLE_NAME} WHERE ${COL_OWNER} = ? AND id in (${marks})`;
 
     pool.query(sql, [userId, ...ids], (err, result) => {
       if (err) return reject(err);
@@ -149,7 +149,7 @@ const deleteContacts = (userId, ids) => {
 
 const deleteAllUserContacts = userId => {
   return new Promise((resolve, reject) => {
-    const sql = `DELETE FROM ${TABLE_NAME} WHERE ${COL_OWNER} = ?`;
+    const sql = `DELETE FROM ${CONTACTS_TABLE_NAME} WHERE ${COL_OWNER} = ?`;
 
     pool.query(sql, userId, (err, result) => {
       if (err) return reject(err);
@@ -161,7 +161,7 @@ const deleteAllUserContacts = userId => {
 
 const importMultibleContacts = values => {
   return new Promise((resolve, reject) => {
-    const sql = `INSERT INTO ${TABLE_NAME} 
+    const sql = `INSERT INTO ${CONTACTS_TABLE_NAME} 
     (${COL_FIRST_NAME}, 
       ${COL_LAST_NAME}, 
       ${COL_AGE}, 
@@ -182,7 +182,7 @@ const importMultibleContacts = values => {
 const importContactsFromFile = fileUrl => {
   return new Promise((resolve, reject) => {
     const sql = `LOAD DATA LOCAL INFILE '${fileUrl}' 
-        INTO TABLE ${TABLE_NAME} 
+        INTO TABLE ${CONTACTS_TABLE_NAME} 
         FIELDS TERMINATED BY ',' 
         ENCLOSED BY '"' 
         LINES TERMINATED BY '\n' 

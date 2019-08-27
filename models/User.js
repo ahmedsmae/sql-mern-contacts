@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 
-const { deleteAllUserContacts } = require('../utils/database/sql-db');
+const {
+  deleteAllUserContacts
+} = require('../database/sql-db/table-contacts/contacts.general');
 
 const userSchema = new mongoose.Schema(
   {
@@ -56,8 +57,8 @@ userSchema.methods.toJSON = function() {
 userSchema.methods.generateAuthToken = async function() {
   const user = this;
   const payload = { _id: user._id.toString() };
-  const token = jwt.sign(payload, config.get('jwtSecret'), {
-    expiresIn: config.get('tokenExpiration')
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: '7 days'
   });
 
   user.tokens = user.tokens.concat({ token });

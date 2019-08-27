@@ -1,5 +1,7 @@
 const pool = require('../root-pool');
-const { TABLE_NAME, COLUMNS } = require('./contacts.table');
+const { CONTACTS_TABLE_NAME, CONTACTS_COLUMNS } = require('./contacts.table');
+
+const { getAllContacts, deleteAllUserContacts } = require('./contacts.general');
 
 const {
   COL_FIRST_NAME,
@@ -10,11 +12,11 @@ const {
   COL_NUMBER_1,
   COL_NUMBER_2,
   COL_OWNER
-} = COLUMNS;
+} = CONTACTS_COLUMNS;
 
 const adminGetAllContacts = () => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME}`;
+    const sql = `SELECT * FROM ${CONTACTS_TABLE_NAME}`;
 
     pool.query(sql, (err, result) => {
       if (err) return reject(err);
@@ -26,7 +28,7 @@ const adminGetAllContacts = () => {
 
 const adminGetContactById = id => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} WHERE id = ?`;
+    const sql = `SELECT * FROM ${CONTACTS_TABLE_NAME} WHERE id = ?`;
 
     pool.query(sql, id, (err, result) => {
       if (err) return reject(err);
@@ -38,7 +40,7 @@ const adminGetContactById = id => {
 
 const adminGetContactByName = txt => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT * FROM ${TABLE_NAME} 
+    const sql = `SELECT * FROM ${CONTACTS_TABLE_NAME} 
         WHERE ${COL_FIRST_NAME} LIKE '%${txt}%' 
         OR ${COL_LAST_NAME} LIKE '%${txt}%'`;
 
@@ -52,7 +54,7 @@ const adminGetContactByName = txt => {
 
 const adminDeleteContact = id => {
   return new Promise((resolve, reject) => {
-    const sql = `DELETE FROM ${TABLE_NAME} id = ?`;
+    const sql = `DELETE FROM ${CONTACTS_TABLE_NAME} id = ?`;
 
     pool.query(sql, id, (err, result) => {
       if (err) return reject(err);
@@ -67,7 +69,7 @@ const adminDeleteAllUserContacts = userId => deleteAllUserContacts(userId);
 
 const adminDropContactsTable = () => {
   return new Promise((resolve, reject) => {
-    const sql = `DROP TABLE IF EXISTS ${TABLE_NAME}`;
+    const sql = `DROP TABLE IF EXISTS ${CONTACTS_TABLE_NAME}`;
 
     pool.query(sql, (err, result) => {
       if (err) return reject(err);

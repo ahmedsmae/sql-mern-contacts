@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 
-const connectMongoDB = require('./utils/database/mongo-db');
-const createTables = require('./utils/database/sql-db/create-tables');
-// const { createContactsTable } = require('./utils/database/sql-db');
+const connectMongoDB = require('./database/mongo-db');
+const createSqlDB = require('./database/sql-db/create-db');
 
 const app = express();
 
@@ -11,7 +11,7 @@ const app = express();
 connectMongoDB();
 
 // build contacts table if not exists
-createTables();
+createSqlDB();
 
 // Init Middleware
 app.use(express.json({ extended: false }));
@@ -37,6 +37,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const PORT = process.env.PORT || 5000;
+// dev port saved on config/dev.env
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

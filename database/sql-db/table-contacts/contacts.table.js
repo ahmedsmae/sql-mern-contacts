@@ -1,10 +1,10 @@
 const pool = require('../root-pool');
 
 // TABLE NAME
-const TABLE_NAME = 'contacts';
+const CONTACTS_TABLE_NAME = 'contacts';
 
 // COLUMNS TITLES
-const COLUMNS = {
+const CONTACTS_COLUMNS = {
   COL_FIRST_NAME: 'firstname',
   COL_LAST_NAME: 'lastname',
   COL_AGE: 'age',
@@ -24,11 +24,11 @@ const {
   COL_NUMBER_1,
   COL_NUMBER_2,
   COL_OWNER
-} = COLUMNS;
+} = CONTACTS_COLUMNS;
 
 const createContactsTable = () => {
   return new Promise((resolve, reject) => {
-    const sql = `CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
+    const sql = `CREATE TABLE IF NOT EXISTS ${CONTACTS_TABLE_NAME} (
             id INT AUTO_INCREMENT PRIMARY KEY, 
             ${COL_FIRST_NAME} VARCHAR(255), 
             ${COL_LAST_NAME} VARCHAR(255), 
@@ -49,7 +49,7 @@ const createContactsTable = () => {
 };
 
 module.exports = {
-  TABLE_NAME,
-  COLUMNS,
+  CONTACTS_TABLE_NAME,
+  CONTACTS_COLUMNS,
   createContactsTable
 };

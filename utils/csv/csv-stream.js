@@ -3,7 +3,7 @@ const csv = require('fast-csv');
 
 const {
   importMultibleContacts
-} = require('../database/sql-db/contacts/contacts.general');
+} = require('../../database/sql-db/table-contacts/contacts.general');
 
 const createStream = fileName => {
   let stream = fs.createReadStream(`uploads\\${fileName}`);

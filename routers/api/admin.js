@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const config = require('config');
 
-const ADMIN_EMAIL = config.get('ADMIN_EMAIL');
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
 const auth = require('../../utils/auth');
 const {
@@ -13,7 +12,7 @@ const {
   adminGetAllUserContacts,
   adminDeleteAllUserContacts,
   adminDropContactsTable
-} = require('../../utils/database/sql-db/contacts/contacts.admin');
+} = require('../../database/sql-db/table-contacts/contacts.admin');
 
 // @route    GET api/admin/contacts
 // @desc     Get all contacts in contacts table
