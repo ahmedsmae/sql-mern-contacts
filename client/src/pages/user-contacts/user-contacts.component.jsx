@@ -86,7 +86,7 @@ const UserContacts = ({
           small
           red
           type='button'
-          onClick={() => setMessage(messageArgs)}
+          onClick={() => selectedContacts.length && setMessage(messageArgs)}
         >
           <i className='fas fa-trash-alt' /> Delete Selection
         </CustomButton>
