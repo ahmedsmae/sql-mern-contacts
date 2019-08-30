@@ -3,24 +3,22 @@ const path = require('path');
 const compression = require('compression');
 const enforce = require('express-sslify');
 
+// ! SHOULD RUN AS EARLY AS POSSIBLE IN THE APP
+// in case of production > heroku will store his own environment variables
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+
+const app = express();
 
 const connectMongoDB = require('./database/mongo-db');
 const createSqlDB = require('./database/sql-db/create-db');
 
-const app = express();
-
-// connect to the users mongo db
+// create and connect databases
 connectMongoDB();
-
-// build contacts table if not exists
 createSqlDB();
 
 // Init Middleware
-app.use(compression()); // for gzipping on heruko
+app.use(compression()); // for gzipping (compression) on heruko
 app.use(express.json({ extended: false }));
-// inforce HTTPS for security
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // Define Routers
 app.use('/api/users', require('./routers/api/users'));
@@ -31,17 +29,19 @@ app.use('/api/admin', require('./routers/api/admin'));
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
   app.use(express.static('client/build'));
+  app.use(enforce.HTTPS({ trustProtoHeader: true })); // inforce HTTPS for security
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
 
+// serve the service worker from the build version whenever asked for it
 app.get('/service-worker.js', (req, res) => {
-  res.send(path.resolve(__dirname, '..', 'build', 'serbice-worker.js'));
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'service-worker.js'));
 });
 
 // dev port saved on .env
-const PORT = process.env.PORT;
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(process.env.PORT, () =>
+  console.log(`Server started on port ${process.env.PORT}`)
+);
